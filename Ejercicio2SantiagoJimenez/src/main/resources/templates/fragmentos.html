@@ -1,104 +1,188 @@
 <!DOCTYPE html>
 <html lang="es"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+</head>
 
 <body>
 
-<header th:fragment="navbar">
+<!-- SIDEBAR -->
+<aside th:fragment="sidebar"
+       class="position-fixed top-0 start-0 vh-100 p-4"
+       style="
+       width: 260px;
+       background: #0d1117;
+       border-right: 1px solid #30363d;
+       z-index: 1000;
+       ">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="mb-5">
 
-        <div class="container">
+        <h3 class="fw-bold text-white mb-0">
+            Medi<span style="color:#2dd4bf;">Care</span>
+        </h3>
 
-            <a class="navbar-brand fw-bold"
-               th:href="@{/}">
-                MediCare
-            </a>
+        <small style="color:#8b949e;">
+            Medical Management
+        </small>
 
-            <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#menuPrincipal">
+    </div>
 
-                <span class="navbar-toggler-icon"></span>
 
-            </button>
+    <nav class="nav flex-column gap-2">
 
-            <div class="collapse navbar-collapse"
-                 id="menuPrincipal">
 
-                <ul class="navbar-nav ms-auto">
+        <!-- INICIO -->
+        <a th:href="@{/}"
+           class="nav-link text-light rounded-3 px-3 py-2"
+           sec:authorize="hasRole('ADMIN')">
 
-                    <li class="nav-item">
+            Inicio
 
-                        <a class="nav-link"
-                           th:href="@{/}">
-                            Inicio
-                        </a>
+        </a>
 
-                    </li>
 
-                    <li class="nav-item">
+        <!-- USUARIOS -->
+        <a th:href="@{/usuarios}"
+           class="nav-link text-light rounded-3 px-3 py-2"
+           sec:authorize="hasRole('ADMIN')">
 
-                        <a class="nav-link"
-                           th:href="@{/usuarios}">
-                            Usuarios
-                        </a>
+            Usuarios
 
-                    </li>
+        </a>
 
-                    <li class="nav-item">
 
-                        <a class="nav-link"
-                           th:href="@{/roles}">
-                            Roles
-                        </a>
+        <!-- ROLES -->
+        <a th:href="@{/roles}"
+           class="nav-link text-light rounded-3 px-3 py-2"
+           sec:authorize="hasRole('ADMIN')">
 
-                    </li>
+            Roles
 
-                    <li class="nav-item">
+        </a>
 
-                        <a class="nav-link"
-                           th:href="@{/citas}">
-                            Citas
-                        </a>
 
-                    </li>
+        <!-- CITAS -->
+        <a th:href="@{/citas}"
+           class="nav-link text-light rounded-3 px-3 py-2"
+           sec:authorize="hasAnyRole('ADMIN','MEDICO','PACIENTE')">
 
-                    <li class="nav-item">
+            Citas Médicas
 
-                        <a class="nav-link"
-                           th:href="@{/consultas}">
-                            Consultas
-                        </a>
+        </a>
 
-                    </li>
 
-                </ul>
+        <!-- CONSULTAS -->
+        <a th:href="@{/consultas}"
+           class="nav-link text-light rounded-3 px-3 py-2"
+           sec:authorize="hasAnyRole('ADMIN','MEDICO','PACIENTE')">
 
+            Consultas
+
+        </a>
+
+    </nav>
+
+
+    <!-- USUARIO -->
+    <div class="position-absolute bottom-0 start-0 w-100 p-4">
+
+        <div class="p-3 rounded-3 mb-3"
+             style="background:#161b22;">
+
+            <small style="color:#8b949e;">
+                Sesión iniciada
+            </small>
+
+            <div class="text-white fw-semibold text-truncate"
+                 sec:authentication="name">
+                usuario
             </div>
 
         </div>
 
-    </nav>
+
+        <form th:action="@{/logout}"
+              method="post"
+              sec:authorize="isAuthenticated()">
+
+            <button type="submit"
+                    class="btn w-100"
+                    style="
+                    background:#21262d;
+                    border:1px solid #30363d;
+                    color:#f0f6fc;
+                    ">
+
+                Cerrar Sesión
+
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>
+
+
+<!-- TOPBAR -->
+<header th:fragment="topbar"
+        class="d-flex justify-content-between align-items-center px-4 py-3"
+        style="
+        background:#161b22;
+        border-bottom:1px solid #30363d;
+        ">
+
+    <div>
+
+        <h5 class="text-white mb-0">
+            Panel de Administración
+        </h5>
+
+    </div>
+
+
+    <div class="d-flex align-items-center gap-3">
+
+        <span style="color:#8b949e;">
+            MediCare
+        </span>
+
+        <div style="
+             width:38px;
+             height:38px;
+             border-radius:50%;
+             background:#2dd4bf;
+             display:flex;
+             align-items:center;
+             justify-content:center;
+             color:#0d1117;
+             font-weight:bold;
+             ">
+
+            M
+
+        </div>
+
+    </div>
 
 </header>
 
 
+<!-- FOOTER -->
 <footer th:fragment="footer"
-        class="bg-dark text-white mt-5">
+        class="text-center py-4 mt-5"
+        style="
+        color:#8b949e;
+        border-top:1px solid #30363d;
+        ">
 
-    <div class="container text-center py-4">
-
-        <p class="mb-1">
-            MediCare
-        </p>
-
-        <small>
-            Sistema de Gestión de Citas Médicas
-        </small>
-
-    </div>
+    <small>
+        MediCare · Sistema de Gestión Médica
+    </small>
 
 </footer>
 

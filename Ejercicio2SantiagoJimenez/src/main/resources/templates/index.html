@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
@@ -9,55 +10,167 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>MediCare | Inicio</title>
+    <title>MediCare | Dashboard</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
+    <style>
+
+        body {
+            margin: 0;
+            background: #010409;
+            color: #f0f6fc;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .dashboard-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            border-color: #2dd4bf;
+        }
+
+        .quick-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 18px;
+            height: 100%;
+        }
+
+        .quick-card p {
+            color: #8b949e;
+        }
+
+        .btn-medical {
+            background: #2dd4bf;
+            color: #04100e;
+            border: none;
+            font-weight: 600;
+        }
+
+        .btn-medical:hover {
+            background: #5eead4;
+            color: #04100e;
+        }
+
+        .text-secondary-custom {
+            color: #8b949e;
+        }
+
+        .welcome-panel {
+            background:
+                linear-gradient(
+                    135deg,
+                    #161b22 0%,
+                    #0d2928 100%
+                );
+
+            border: 1px solid #30363d;
+            border-radius: 20px;
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
 
-<div th:replace="~{fragmentos :: navbar}">
+<body>
+
+
+<!-- SIDEBAR -->
+<div th:replace="~{fragmentos :: sidebar}">
 </div>
 
-<main>
 
-    <section class="bg-primary text-white py-5">
+<!-- CONTENIDO -->
+<div class="main-content">
 
-        <div class="container py-4">
+
+    <!-- TOPBAR -->
+    <div th:replace="~{fragmentos :: topbar}">
+    </div>
+
+
+    <main class="container-fluid p-4 p-lg-5">
+
+
+        <!-- BIENVENIDA -->
+        <section class="welcome-panel p-5 mb-5">
 
             <div class="row align-items-center">
 
-                <div class="col-lg-7">
 
-                    <h1 class="display-5 fw-bold">
-                        Gestión médica más organizada
+                <div class="col-lg-8">
+
+                    <p class="mb-2"
+                       style="color:#2dd4bf;">
+
+                        SISTEMA MEDICARE
+
+                    </p>
+
+                    <h1 class="display-5 fw-bold mb-3">
+
+                        Centro de Gestión Médica
+
                     </h1>
 
-                    <p class="lead mt-3">
-                        MediCare permite administrar usuarios,
-                        roles y citas médicas desde una misma plataforma.
+                    <p class="lead text-secondary-custom mb-4">
+
+                        Administre usuarios, roles y citas médicas
+                        desde un entorno centralizado.
+
                     </p>
 
                     <a th:href="@{/citas}"
-                       class="btn btn-light btn-lg mt-2">
+                       class="btn btn-medical px-4 py-2">
+
                         Ver Citas Médicas
+
                     </a>
 
                 </div>
 
-                <div class="col-lg-5 text-center mt-4 mt-lg-0">
 
-                    <div class="bg-white text-primary rounded-4 shadow p-5">
+                <div class="col-lg-4 text-center mt-4 mt-lg-0">
 
-                        <h2 class="fw-bold">
-                            MediCare
-                        </h2>
+                    <div style="
+                         width:170px;
+                         height:170px;
+                         border-radius:50%;
+                         background:#0d1117;
+                         border:2px solid #2dd4bf;
+                         margin:auto;
+                         display:flex;
+                         align-items:center;
+                         justify-content:center;
+                         ">
 
-                        <p class="text-secondary mb-0">
-                            Centro de Servicios de Salud
-                        </p>
+                        <div>
+
+                            <h1 style="
+                                font-size:60px;
+                                color:#2dd4bf;
+                                margin:0;
+                                ">
+                                +
+                            </h1>
+
+                            <small class="text-secondary-custom">
+                                MediCare
+                            </small>
+
+                        </div>
 
                     </div>
 
@@ -65,126 +178,211 @@
 
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <section class="container py-5">
+        <!-- TITULO -->
+        <div class="mb-4">
 
-        <div class="text-center mb-5">
-
-            <h2>
+            <h3 class="fw-bold">
                 Módulos del Sistema
-            </h2>
+            </h3>
 
-            <p class="text-muted">
-                Seleccione la opción que desea administrar.
+            <p class="text-secondary-custom">
+                Seleccione el módulo que desea administrar.
             </p>
 
         </div>
 
 
+        <!-- MODULOS -->
         <div class="row g-4">
 
-            <div class="col-md-6 col-lg-3">
 
-                <div class="card h-100 border-0 shadow-sm">
+            <!-- USUARIOS -->
+            <div class="col-md-6 col-xl-3"
+                 sec:authorize="hasRole('ADMIN')">
 
-                    <div class="card-body p-4">
+                <div class="quick-card p-4">
 
-                        <h4>
-                            Usuarios
-                        </h4>
+                    <div class="mb-4">
 
-                        <p class="text-muted">
-                            Administre las cuentas y roles de los usuarios.
-                        </p>
+                        <div style="
+                             width:48px;
+                             height:48px;
+                             background:#112b2a;
+                             color:#2dd4bf;
+                             border-radius:12px;
+                             display:flex;
+                             align-items:center;
+                             justify-content:center;
+                             font-size:22px;
+                             font-weight:bold;
+                             ">
 
-                        <a th:href="@{/usuarios}"
-                           class="btn btn-outline-primary">
-                            Ir a Usuarios
-                        </a>
+                            U
+
+                        </div>
 
                     </div>
+
+                    <h4>
+                        Usuarios
+                    </h4>
+
+                    <p>
+                        Gestione las cuentas registradas y los roles
+                        asignados.
+                    </p>
+
+                    <a th:href="@{/usuarios}"
+                       class="btn btn-medical">
+
+                        Administrar
+
+                    </a>
 
                 </div>
 
             </div>
 
 
-            <div class="col-md-6 col-lg-3">
+            <!-- ROLES -->
+            <div class="col-md-6 col-xl-3"
+                 sec:authorize="hasRole('ADMIN')">
 
-                <div class="card h-100 border-0 shadow-sm">
+                <div class="quick-card p-4">
 
-                    <div class="card-body p-4">
+                    <div class="mb-4">
 
-                        <h4>
-                            Roles
-                        </h4>
+                        <div style="
+                             width:48px;
+                             height:48px;
+                             background:#112b2a;
+                             color:#2dd4bf;
+                             border-radius:12px;
+                             display:flex;
+                             align-items:center;
+                             justify-content:center;
+                             font-size:22px;
+                             font-weight:bold;
+                             ">
 
-                        <p class="text-muted">
-                            Gestione los permisos disponibles en MediCare.
-                        </p>
+                            R
 
-                        <a th:href="@{/roles}"
-                           class="btn btn-outline-primary">
-                            Ir a Roles
-                        </a>
+                        </div>
 
                     </div>
+
+                    <h4>
+                        Roles
+                    </h4>
+
+                    <p>
+                        Controle los perfiles de acceso disponibles
+                        dentro de MediCare.
+                    </p>
+
+                    <a th:href="@{/roles}"
+                       class="btn btn-medical">
+
+                        Administrar
+
+                    </a>
 
                 </div>
 
             </div>
 
 
-            <div class="col-md-6 col-lg-3">
+            <!-- CITAS -->
+            <div class="col-md-6 col-xl-3">
 
-                <div class="card h-100 border-0 shadow-sm">
+                <div class="quick-card p-4">
 
-                    <div class="card-body p-4">
+                    <div class="mb-4">
 
-                        <h4>
-                            Citas
-                        </h4>
+                        <div style="
+                             width:48px;
+                             height:48px;
+                             background:#112b2a;
+                             color:#2dd4bf;
+                             border-radius:12px;
+                             display:flex;
+                             align-items:center;
+                             justify-content:center;
+                             font-size:22px;
+                             font-weight:bold;
+                             ">
 
-                        <p class="text-muted">
-                            Registre y administre las citas médicas.
-                        </p>
+                            C
 
-                        <a th:href="@{/citas}"
-                           class="btn btn-outline-primary">
-                            Ir a Citas
-                        </a>
+                        </div>
 
                     </div>
+
+                    <h4>
+                        Citas
+                    </h4>
+
+                    <p>
+                        Consulte y administre las citas médicas
+                        registradas.
+                    </p>
+
+                    <a th:href="@{/citas}"
+                       class="btn btn-medical">
+
+                        Ver Citas
+
+                    </a>
 
                 </div>
 
             </div>
 
 
-            <div class="col-md-6 col-lg-3">
+            <!-- CONSULTAS -->
+            <div class="col-md-6 col-xl-3">
 
-                <div class="card h-100 border-0 shadow-sm">
+                <div class="quick-card p-4">
 
-                    <div class="card-body p-4">
+                    <div class="mb-4">
 
-                        <h4>
-                            Consultas
-                        </h4>
+                        <div style="
+                             width:48px;
+                             height:48px;
+                             background:#112b2a;
+                             color:#2dd4bf;
+                             border-radius:12px;
+                             display:flex;
+                             align-items:center;
+                             justify-content:center;
+                             font-size:22px;
+                             font-weight:bold;
+                             ">
 
-                        <p class="text-muted">
-                            Consulte citas por estado, fecha o especialidad.
-                        </p>
+                            Q
 
-                        <a th:href="@{/consultas}"
-                           class="btn btn-outline-primary">
-                            Consultar
-                        </a>
+                        </div>
 
                     </div>
+
+                    <h4>
+                        Consultas
+                    </h4>
+
+                    <p>
+                        Busque citas por estado, rango de fechas
+                        o especialidad.
+                    </p>
+
+                    <a th:href="@{/consultas}"
+                       class="btn btn-medical">
+
+                        Consultar
+
+                    </a>
 
                 </div>
 
@@ -192,15 +390,59 @@
 
         </div>
 
-    </section>
 
-</main>
+        <!-- INFORMACION -->
+        <section class="dashboard-card p-4 mt-5">
 
-<div th:replace="~{fragmentos :: footer}">
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+
+                    <h4>
+                        Plataforma MediCare
+                    </h4>
+
+                    <p class="text-secondary-custom mb-0">
+
+                        Sistema destinado a centralizar la administración
+                        de usuarios y citas del centro de salud.
+
+                    </p>
+
+                </div>
+
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                    <span class="badge px-3 py-2"
+                          style="
+                          background:#112b2a;
+                          color:#2dd4bf;
+                          ">
+
+                        Sistema Activo
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <div th:replace="~{fragmentos :: footer}">
+        </div>
+
+
+    </main>
+
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
 </body>
+
 </html>
