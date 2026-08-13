@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediCare | Usuarios</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold"
+           th:href="@{/}">
+            MediCare
+        </a>
+
+        <span class="navbar-text text-white">
+            Gestión de Usuarios
+        </span>
+
+    </div>
+</nav>
+
+<main class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="mb-1">
+                Usuarios del Sistema
+            </h2>
+
+            <p class="text-muted mb-0">
+                Administración de cuentas registradas en MediCare.
+            </p>
+        </div>
+
+        <a th:href="@{/usuarios/nuevo}"
+           class="btn btn-primary">
+            Nuevo Usuario
+        </a>
+
+    </div>
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th class="text-end">
+                            Acciones
+                        </th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="usuario : ${usuarios}">
+
+                        <td th:text="${usuario.id}">
+                            1
+                        </td>
+
+                        <td th:text="${usuario.nombre}">
+                            Usuario
+                        </td>
+
+                        <td th:text="${usuario.email}">
+                            correo@medicare.com
+                        </td>
+
+                        <td>
+                            <span class="badge bg-secondary"
+                                  th:text="${usuario.rol != null ? usuario.rol.nombre : 'Sin rol'}">
+                                ADMIN
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <span th:if="${usuario.activo}"
+                                  class="badge bg-success">
+                                Activo
+                            </span>
+
+                            <span th:unless="${usuario.activo}"
+                                  class="badge bg-danger">
+                                Inactivo
+                            </span>
+
+                        </td>
+
+                        <td class="text-end">
+
+                            <a th:href="@{/usuarios/detalle/{id}(id=${usuario.id})}"
+                               class="btn btn-outline-secondary btn-sm">
+                                Ver
+                            </a>
+
+                            <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}"
+                               class="btn btn-outline-primary btn-sm">
+                                Editar
+                            </a>
+
+                            <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}"
+                               class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('¿Desea eliminar este usuario?');">
+                                Eliminar
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(usuarios)}">
+
+                        <td colspan="6"
+                            class="text-center text-muted py-4">
+
+                            No existen usuarios registrados.
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+
+        <a th:href="@{/}"
+           class="btn btn-outline-secondary">
+            Volver al Inicio
+        </a>
+
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>
