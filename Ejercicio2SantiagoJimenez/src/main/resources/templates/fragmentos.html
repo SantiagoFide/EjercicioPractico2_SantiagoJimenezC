@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<header th:fragment="navbar">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="container">
+
+            <a class="navbar-brand fw-bold"
+               th:href="@{/}">
+                MediCare
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menuPrincipal">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <div class="collapse navbar-collapse"
+                 id="menuPrincipal">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           th:href="@{/}">
+                            Inicio
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           th:href="@{/usuarios}">
+                            Usuarios
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           th:href="@{/roles}">
+                            Roles
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           th:href="@{/citas}">
+                            Citas
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           th:href="@{/consultas}">
+                            Consultas
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<footer th:fragment="footer"
+        class="bg-dark text-white mt-5">
+
+    <div class="container text-center py-4">
+
+        <p class="mb-1">
+            MediCare
+        </p>
+
+        <small>
+            Sistema de Gestión de Citas Médicas
+        </small>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

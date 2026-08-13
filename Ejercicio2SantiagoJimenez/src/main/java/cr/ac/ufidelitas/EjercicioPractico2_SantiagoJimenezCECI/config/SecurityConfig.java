@@ -14,15 +14,14 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
 
-                // Acceso temporal para probar los CRUD
                 .requestMatchers(
                     "/",
                     "/roles/**",
                     "/usuarios/**",
-                    "/citas/**"
+                    "/citas/**",
+                    "/consultas/**"
                 ).permitAll()
 
-                // Cualquier otra ruta necesita autenticación
                 .anyRequest().authenticated()
             )
 
